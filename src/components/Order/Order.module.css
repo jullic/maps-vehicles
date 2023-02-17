@@ -1,0 +1,50 @@
+.root {
+	position: relative;
+}
+
+.current {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+}
+
+.current span {
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+	text-decoration-line: underline;
+}
+.icon {
+	transition: transform 0.2s ease-in-out;
+}
+.icon:global(.active) {
+	transform: rotate(180deg);
+}
+.items {
+	position: absolute;
+	top: 130%;
+	left: 90px;
+	display: none;
+	flex-direction: column;
+	background: var(--white-color);
+	box-shadow: 0px 0px 10px 2px rgba(34, 37, 63, 0.2);
+	width: min-content;
+	white-space: nowrap;
+}
+
+.items:global(.active) {
+	display: flex;
+}
+
+.item {
+	padding: 8px 16px;
+	transition: background 0.2s ease-in-out, color, 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.item:global(.active),
+.item:hover {
+	background: var(--primary-color);
+	color: var(--white-color);
+}
