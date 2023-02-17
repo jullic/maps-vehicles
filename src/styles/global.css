@@ -1,12 +1,13 @@
 :root {
-	--black-color: #1D1D1F;
-	--primary-color: #EA5252;
-	--background-color: #FFFCF9;
+	--primary-color: #22253f;
+	--white-color: #ffffff;
 }
 
-html, body {
+html,
+body {
 	height: 100%;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
+	color: var(--primary-color);
 }
 
 * {
