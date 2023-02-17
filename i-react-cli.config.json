@@ -1,0 +1,28 @@
+{
+	"wordForReplace": "FILENAME",
+	"templatesPath": "irc/templates",
+	"layoutsPath": "irc/layouts",
+	"defaultOutputPath": "./src",
+	"ignoreExistingFile": false,
+	"createNamedFolder": false,
+	"defaultStyleExtension": "css",
+	"defaultStylesWrapper": "classNames",
+	"packages": [
+		{
+			"name": "axios",
+			"dev": false
+		},
+		{
+			"name": "classnames",
+			"dev": false
+		},
+		{
+			"name": "react-router-dom",
+			"dev": false
+		},
+		{
+			"name": "typescript-plugin-css-modules",
+			"dev": true
+		}
+	]
+}
