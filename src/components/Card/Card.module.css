@@ -1,0 +1,88 @@
+.root {
+	position: relative;
+	padding: 16px;
+	background: #ffffff;
+	box-shadow: 0px 0px 10px 2px rgba(34, 37, 63, 0.2);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	transition: filter 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.delete {
+	border: none;
+	background: none;
+	position: absolute;
+	right: 16px;
+	top: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: none;
+	cursor: pointer;
+}
+.root:hover {
+	filter: brightness(0.95);
+}
+.root:hover .delete {
+	display: block;
+}
+
+.root:global(.active) * {
+	color: var(--white-color);
+}
+
+.root:global(.active) {
+	background: var(--primary-color);
+}
+
+.root:global(.active) path {
+	stroke: var(--white-color);
+	fill: var(--white-color);
+}
+
+.root:global(.active) param {
+	color: var(--white-color);
+}
+
+.year {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+.name {
+}
+.mark {
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 22px;
+}
+.model {
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 22px;
+}
+.params {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.param {
+	opacity: 0.5;
+}
+.price {
+	margin-top: 8px;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 17px;
+	text-align: right;
+}
+
+@media (max-width: 991px) {
+	.delete {
+		display: block;
+	}
+}
