@@ -1,7 +1,9 @@
+import { sortReducer } from './slices/sort.slice';
+import { carReducer } from './slices/car.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
-	reducer: {},
+	reducer: { carReducer, sortReducer },
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 

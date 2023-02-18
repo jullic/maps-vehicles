@@ -18,6 +18,9 @@ export const MapContainer: FC<IMapContainerProps> = ({ ...props }) => {
 						options={{
 							iconColor: '#22253f',
 							openBalloonOnClick: true,
+							iconLayout: 'default#image',
+							iconImageSize: [50, 50],
+							iconImageHref: `https://img.icons8.com/ios-filled/2x/marker-t.png`,
 						}}
 						onClick={(e: any) =>
 							console.log(

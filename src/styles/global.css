@@ -9,6 +9,10 @@ body {
 	font-family: "Montserrat", sans-serif;
 	color: var(--primary-color);
 }
+input {
+	font-family: "Montserrat", sans-serif;
+	border: none;
+}
 
 * {
 	padding: 0;

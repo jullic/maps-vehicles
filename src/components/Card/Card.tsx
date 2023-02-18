@@ -1,29 +1,69 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import classNames from 'classnames';
 import { ICardProps } from './Card.props';
 import styles from './Card.module.css';
-import { Title } from '../Title/Title';
 import { ReactComponent as ExitIcon } from '../../assets/img/ic_round-close.svg';
+import { useAppDispatch } from '../../hooks/redux.hooks';
+import { changeCar, deleteCar } from '../../redux/slices/car.slice';
+import { ICar } from '../../interfaces/car.interface';
 
-export const Card: FC<ICardProps> = ({ className, ...props }) => {
+export const Card: FC<ICardProps> = ({ className, data, ...props }) => {
+	const dispatch = useAppDispatch();
+
+	const deleteHandler = () => {
+		dispatch(deleteCar(data.id));
+	};
+
+	const changeDataHandler =
+		(key: keyof ICar) => (e: ChangeEvent<HTMLInputElement>) => {
+			const value =
+				key === 'price'
+					? e.target.value.replace(/[^0-9]/g, '')
+					: e.target.value;
+			dispatch(changeCar({ id: data.id, data: { [key]: value } }));
+		};
+
 	return (
 		<div className={classNames(styles.root, className)} {...props}>
-			<button className={classNames(styles.delete)}>
+			<button
+				className={classNames(styles.delete)}
+				onClick={deleteHandler}
+			>
 				<ExitIcon />
 			</button>
-			<p className={classNames(styles.year)}>2021</p>
-			<div>
-				<Title tag='h2' className={classNames(styles.mark)}>
-					Tayota
-				</Title>
-				<p className={classNames(styles.model)}>Camry</p>
+			<p className={classNames(styles.year)}>{data.year}</p>
+			<div className={classNames(styles.name)}>
+				<input
+					className={classNames(styles.mark)}
+					placeholder={'Brand'}
+					value={data.name}
+					onChange={changeDataHandler('name')}
+				/>
+				<input
+					className={classNames(styles.model)}
+					placeholder={'Model'}
+					value={data.model}
+					onChange={changeDataHandler('model')}
+				/>
 			</div>
 			<div className={classNames(styles.params)}>
-				<p className={classNames(styles.param)}>Color: red</p>
-				<p className={classNames(styles.param)}>Latitude: 55.753215</p>
-				<p className={classNames(styles.param)}>Longitude: 37.620393</p>
+				<p className={classNames(styles.param)}>Color: {data.color}</p>
+				<p className={classNames(styles.param)}>
+					Latitude: {data.latitude}
+				</p>
+				<p className={classNames(styles.param)}>
+					Longitude: {data.longitude}
+				</p>
 			</div>
-			<p className={classNames(styles.price)}>21000 $</p>
+			<div className={classNames(styles.full)}>
+				<input
+					className={classNames(styles.price)}
+					placeholder={'Price'}
+					value={data.price}
+					onChange={changeDataHandler('price')}
+				/>
+				$
+			</div>
 		</div>
 	);
 };
