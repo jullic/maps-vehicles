@@ -2,8 +2,8 @@
 
 ## Overview
 
-The project is executed on the React library
-All tasks have been completed
+The project is executed on the React library\
+All tasks have been completed\
 An additional task was also completed
 
 ### `npm start`
