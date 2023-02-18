@@ -1,5 +1,4 @@
 import { ISort } from './../../interfaces/sort.interface';
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ISortSliceState {

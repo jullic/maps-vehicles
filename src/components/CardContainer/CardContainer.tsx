@@ -1,18 +1,17 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import classNames from 'classnames';
 import { ICardContainerProps } from './CardContainer.props';
 import styles from './CardContainer.module.css';
 import { Card } from '../Card/Card';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { fetchCars } from '../../redux/slices/car.slice';
-import { updateMarks } from '../../redux/slices/mark.slice';
-import { IMark } from '../../interfaces/mark.interface';
 import { CardSkeleton } from '../CardSkeleton/CardSkeleton';
 
 export const CardContainer: FC<ICardContainerProps> = ({
 	className,
 	...props
 }) => {
+	// Sorting cards
 	const { sortedCars, status } = useAppSelector((state) => {
 		const cars = [...state.carReducer.cars];
 		const sort = state.sortReducer.currentSort;
@@ -26,14 +25,15 @@ export const CardContainer: FC<ICardContainerProps> = ({
 		});
 
 		return { sortedCars, status };
-		// return cars;
 	});
 	const dispatch = useAppDispatch();
 
+	// Receiving cards
 	useEffect(() => {
 		dispatch(fetchCars());
 	}, []);
 
+	// Displaying skeletons when loading
 	if (status === 'loading') {
 		return (
 			<div className={classNames(styles.root, className)} {...props}>
@@ -44,6 +44,7 @@ export const CardContainer: FC<ICardContainerProps> = ({
 		);
 	}
 
+	// Displaying error message when error
 	if (status === 'error') {
 		return (
 			<div className={classNames(styles.error)}>

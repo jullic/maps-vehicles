@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
 import { ITitleProps } from './Title.props';
 import styles from './Title.module.css';

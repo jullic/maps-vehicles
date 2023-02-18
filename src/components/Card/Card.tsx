@@ -1,12 +1,4 @@
-import React, {
-	ChangeEvent,
-	FC,
-	memo,
-	MouseEvent,
-	useCallback,
-	useEffect,
-	useRef,
-} from 'react';
+import { ChangeEvent, FC, memo, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { ICardProps } from './Card.props';
 import styles from './Card.module.css';
@@ -18,19 +10,21 @@ import {
 	deleteCar,
 } from '../../redux/slices/car.slice';
 import { ICar } from '../../interfaces/car.interface';
-import { addMarks, changeActiveMark } from '../../redux/slices/mark.slice';
+import { changeActiveMark } from '../../redux/slices/mark.slice';
 
 export const Card: FC<ICardProps> = memo(({ className, data, ...props }) => {
 	const dispatch = useAppDispatch();
 
-	// without destructuring, so that there are no updates
+	// Without destructuring, so that there are no updates
 	const activeCar = useAppSelector((state) => state.carReducer.activeCar);
 
+	// Deletes the car card
 	const deleteHandler = (e: MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		dispatch(deleteCar(data.id));
 	};
 
+	// Sets the active car card to highlight it on the map
 	const setActiveCarHandler = () => {
 		if (activeCar?.id !== data.id) {
 			dispatch(changeActiveCar({ car: data }));
@@ -47,13 +41,14 @@ export const Card: FC<ICardProps> = memo(({ className, data, ...props }) => {
 		}
 	};
 
+	// Changing card data
 	const changeDataHandler =
 		(key: keyof ICar) => (e: ChangeEvent<HTMLInputElement>) => {
 			const value =
 				key === 'price'
-					? e.target.value.replace(/[^0-9]/g, '')
+					? Number(e.target.value.replace(/[^0-9]/g, ''))
 					: e.target.value;
-			if (data[key] != value) {
+			if (data[key] !== value) {
 				dispatch(changeCar({ id: data.id, data: { [key]: value } }));
 			}
 		};
@@ -64,6 +59,7 @@ export const Card: FC<ICardProps> = memo(({ className, data, ...props }) => {
 				active: data.id === activeCar?.id,
 			})}
 			onClick={setActiveCarHandler}
+			// Attribute for scrolling to the active card when selecting a car on the map
 			data-card
 			{...props}
 		>

@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { IOrderProps } from './Order.props';
 import styles from './Order.module.css';
-
 import { ReactComponent as Icon } from '../../assets/img/polygon.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { changeCurrentSort } from '../../redux/slices/sort.slice';
@@ -16,14 +15,15 @@ export const Order: FC<IOrderProps> = ({ className, ...props }) => {
 	);
 	const dispatch = useAppDispatch();
 
+	// Changing the active sorting
 	const changeSortHandler = (data: ISort) => {
 		dispatch(changeCurrentSort({ data }));
 	};
 
+	// Closing the window with the selection of sorting when clicking outside its area
 	useEffect(() => {
 		const handler = () => {
 			setIsOpen(false);
-			console.log(1);
 		};
 		if (isOpen) {
 			document.addEventListener('click', handler);
@@ -53,7 +53,7 @@ export const Order: FC<IOrderProps> = ({ className, ...props }) => {
 						className={classNames(styles.item, {
 							active: variant.value === currentSort.value,
 						})}
-						onClick={(e) => changeSortHandler(variant)}
+						onClick={() => changeSortHandler(variant)}
 					>
 						{variant.value}
 					</div>

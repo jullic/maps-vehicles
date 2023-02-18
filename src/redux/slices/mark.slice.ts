@@ -25,11 +25,6 @@ export const markSlice = createSlice({
 			state.activeMark = action.payload.data;
 		},
 	},
-	extraReducers: (builder) => {
-		builder.addCase('carSlice/deleteCar', (state, action) => {
-			// state.marks = [];
-		});
-	},
 });
 
 export const markReducer = markSlice.reducer;

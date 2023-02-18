@@ -2,11 +2,14 @@ import { IMark } from './../../interfaces/mark.interface';
 import { ICar } from '../../interfaces/car.interface';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { addMarks, updateMarks } from './mark.slice';
+import { updateMarks } from './mark.slice';
 
 export const fetchCars = createAsyncThunk<ICar[], undefined>(
 	'carSlice/fetch',
 	async (params, thunkApi) => {
+		// I consider querying the entire database to be a bad practice
+		// and adhere to pagination,
+		// but the provided api does not support pagination.
 		const data = (
 			await axios.get<ICar[]>('https://test.tspb.su/test-task/vehicles')
 		).data;
@@ -19,8 +22,8 @@ export const fetchCars = createAsyncThunk<ICar[], undefined>(
 				longitude: car.longitude,
 			};
 		});
+		// Adding marks for the map
 		thunkApi.dispatch(updateMarks({ data: marks }));
-
 		return data;
 	}
 );
@@ -48,11 +51,18 @@ export const carSlice = createSlice({
 			state,
 			action: PayloadAction<{ id: number; data: Partial<ICar> }>
 		) => {
-			state.cars.forEach((car, i, arr) => {
-				if (car.id === action.payload.id) {
-					arr[i] = { ...arr[i], ...action.payload.data };
-				}
-			});
+			// Search for the index of the car that needs to be changed
+			const index = state.cars.findIndex(
+				(car) => car.id === action.payload.id
+			);
+			if (index === -1) {
+				return state;
+			}
+			// Updating the card
+			state.cars[index] = {
+				...state.cars[index],
+				...action.payload.data,
+			};
 		},
 		changeActiveCar(state, action: PayloadAction<{ car: ICar }>) {
 			state.activeCar = action.payload.car;
@@ -65,7 +75,7 @@ export const carSlice = createSlice({
 			})
 			.addCase(fetchCars.fulfilled, (state, action) => {
 				state.status = 'idle';
-				state.cars = action.payload;
+				state.cars = [...state.cars, ...action.payload];
 			})
 			.addCase(fetchCars.rejected, (state) => {
 				state.status = 'error';

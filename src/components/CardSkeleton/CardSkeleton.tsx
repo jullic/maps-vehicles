@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
 import { ICardSkeletonProps } from './CardSkeleton.props';
 import styles from './CardSkeleton.module.css';
