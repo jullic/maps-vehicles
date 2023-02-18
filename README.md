@@ -6,6 +6,9 @@ The project is executed on the React library\
 All tasks have been completed\
 An additional task was also completed
 
+## Demo Project
+https://stunning-eclair-e78195.netlify.app
+
 ### `npm start`
 
 Runs the app in the development mode.\
