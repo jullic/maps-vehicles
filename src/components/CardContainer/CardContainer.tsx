@@ -6,6 +6,7 @@ import { Card } from '../Card/Card';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { fetchCars } from '../../redux/slices/car.slice';
 import { CardSkeleton } from '../CardSkeleton/CardSkeleton';
+import { Title } from '../Title/Title';
 
 export const CardContainer: FC<ICardContainerProps> = ({
 	className,
@@ -55,6 +56,7 @@ export const CardContainer: FC<ICardContainerProps> = ({
 
 	return (
 		<div className={classNames(styles.root, className)} {...props}>
+			{sortedCars.length === 0 && <Title>There are no cards</Title>}
 			{sortedCars.map((car) => (
 				<Card key={car.id} data={car} />
 			))}
