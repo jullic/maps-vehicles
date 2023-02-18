@@ -9,12 +9,12 @@ interface ISortSliceState {
 
 const initialState: ISortSliceState = {
 	variants: [
-		{ field: 'year', type: '+', value: 'Year (ascending)' },
-		{ field: 'year', type: '-', value: 'Year (decreasing)' },
-		{ field: 'price', type: '+', value: 'Price (ascending)' },
-		{ field: 'price', type: '-', value: 'Price (decreasing)' },
+		{ field: 'year', type: '+', value: 'Year (ASC)' },
+		{ field: 'year', type: '-', value: 'Year (DESC)' },
+		{ field: 'price', type: '+', value: 'Price (ASC)' },
+		{ field: 'price', type: '-', value: 'Price (DESC)' },
 	],
-	currentSort: { field: 'year', type: '+', value: 'Year (ascending)' },
+	currentSort: { field: 'year', type: '+', value: 'Year (ASC)' },
 };
 
 export const sortSlice = createSlice({

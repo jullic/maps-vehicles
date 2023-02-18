@@ -1,6 +1,8 @@
+import { IMark } from './../../interfaces/mark.interface';
 import { ICar } from '../../interfaces/car.interface';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { addMarks, updateMarks } from './mark.slice';
 
 export const fetchCars = createAsyncThunk<ICar[], undefined>(
 	'carSlice/fetch',
@@ -9,6 +11,16 @@ export const fetchCars = createAsyncThunk<ICar[], undefined>(
 			await axios.get<ICar[]>('https://test.tspb.su/test-task/vehicles')
 		).data;
 
+		const marks: IMark[] = data.map((car) => {
+			return {
+				carId: car.id,
+				carName: car.name + ' ' + car.model,
+				latitude: car.latitude,
+				longitude: car.longitude,
+			};
+		});
+		thunkApi.dispatch(updateMarks({ data: marks }));
+
 		return data;
 	}
 );
@@ -16,11 +28,13 @@ export const fetchCars = createAsyncThunk<ICar[], undefined>(
 interface ICarSliceState {
 	status: 'idle' | 'loading' | 'error';
 	cars: ICar[];
+	activeCar: ICar | null;
 }
 
 const initialState: ICarSliceState = {
 	status: 'idle',
 	cars: [],
+	activeCar: null,
 };
 
 export const carSlice = createSlice({
@@ -40,6 +54,9 @@ export const carSlice = createSlice({
 				}
 			});
 		},
+		changeActiveCar(state, action: PayloadAction<{ car: ICar }>) {
+			state.activeCar = action.payload.car;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -57,4 +74,4 @@ export const carSlice = createSlice({
 });
 
 export const carReducer = carSlice.reducer;
-export const { changeCar, deleteCar } = carSlice.actions;
+export const { changeCar, deleteCar, changeActiveCar } = carSlice.actions;

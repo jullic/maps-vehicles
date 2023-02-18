@@ -1,17 +1,50 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, {
+	ChangeEvent,
+	FC,
+	memo,
+	MouseEvent,
+	useCallback,
+	useEffect,
+	useRef,
+} from 'react';
 import classNames from 'classnames';
 import { ICardProps } from './Card.props';
 import styles from './Card.module.css';
 import { ReactComponent as ExitIcon } from '../../assets/img/ic_round-close.svg';
-import { useAppDispatch } from '../../hooks/redux.hooks';
-import { changeCar, deleteCar } from '../../redux/slices/car.slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import {
+	changeActiveCar,
+	changeCar,
+	deleteCar,
+} from '../../redux/slices/car.slice';
 import { ICar } from '../../interfaces/car.interface';
+import { addMarks, changeActiveMark } from '../../redux/slices/mark.slice';
 
-export const Card: FC<ICardProps> = ({ className, data, ...props }) => {
+export const Card: FC<ICardProps> = memo(({ className, data, ...props }) => {
 	const dispatch = useAppDispatch();
 
-	const deleteHandler = () => {
+	// without destructuring, so that there are no updates
+	const activeCar = useAppSelector((state) => state.carReducer.activeCar);
+
+	const deleteHandler = (e: MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
 		dispatch(deleteCar(data.id));
+	};
+
+	const setActiveCarHandler = () => {
+		if (activeCar?.id !== data.id) {
+			dispatch(changeActiveCar({ car: data }));
+			dispatch(
+				changeActiveMark({
+					data: {
+						carId: data.id,
+						carName: data.name + ' ' + data.model,
+						latitude: data.latitude,
+						longitude: data.longitude,
+					},
+				})
+			);
+		}
 	};
 
 	const changeDataHandler =
@@ -20,11 +53,20 @@ export const Card: FC<ICardProps> = ({ className, data, ...props }) => {
 				key === 'price'
 					? e.target.value.replace(/[^0-9]/g, '')
 					: e.target.value;
-			dispatch(changeCar({ id: data.id, data: { [key]: value } }));
+			if (data[key] != value) {
+				dispatch(changeCar({ id: data.id, data: { [key]: value } }));
+			}
 		};
 
 	return (
-		<div className={classNames(styles.root, className)} {...props}>
+		<div
+			className={classNames(styles.root, className, {
+				active: data.id === activeCar?.id,
+			})}
+			onClick={setActiveCarHandler}
+			data-card
+			{...props}
+		>
 			<button
 				className={classNames(styles.delete)}
 				onClick={deleteHandler}
@@ -66,4 +108,4 @@ export const Card: FC<ICardProps> = ({ className, data, ...props }) => {
 			</div>
 		</div>
 	);
-};
+});

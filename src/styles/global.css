@@ -12,6 +12,7 @@ body {
 input {
 	font-family: "Montserrat", sans-serif;
 	border: none;
+	background: none;
 }
 
 * {

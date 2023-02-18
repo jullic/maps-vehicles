@@ -37,6 +37,22 @@
 
 .root:global(.active) {
 	background: var(--primary-color);
+	animation: root 0.7s ease-in-out forwards;
+}
+
+@keyframes root {
+	0% {
+		background: var(--white-color);
+	}
+	20% {
+		background: var(--primary-color);
+	}
+	40% {
+		background: #000;
+	}
+	100% {
+		background: var(--primary-color);
+	}
 }
 
 .root:global(.active) path {

@@ -17,3 +17,9 @@
 		flex-direction: column;
 	}
 }
+
+@media (max-width: 575px) {
+	.container {
+		padding: 20px 0;
+	}
+}

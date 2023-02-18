@@ -4,6 +4,11 @@
 	gap: 16px;
 }
 
+.error {
+	font-size: 24px;
+	font-weight: bold;
+}
+
 @media (max-width: 991px) {
 	.root {
 		display: flex;
