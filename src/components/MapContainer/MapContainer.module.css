@@ -1,11 +1,5 @@
-.root {
-}
 .map {
 	position: sticky;
 	top: 80px;
 	width: 100%;
-}
-
-:global(.ymaps-2-1-79-ground-pane) {
-	/* -webkit-filter: grayscale(1); */
 }

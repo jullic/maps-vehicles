@@ -12,7 +12,7 @@ export const Card: FC<ICardProps> = ({ className, ...props }) => {
 				<ExitIcon />
 			</button>
 			<p className={classNames(styles.year)}>2021</p>
-			<div className={classNames(styles.name)}>
+			<div>
 				<Title tag='h2' className={classNames(styles.mark)}>
 					Tayota
 				</Title>
