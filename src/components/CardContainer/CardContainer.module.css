@@ -3,3 +3,12 @@
 	grid-template-columns: 1fr 1fr;
 	gap: 16px;
 }
+
+@media (max-width: 991px) {
+	.root {
+		display: flex;
+		width: 100%;
+		overflow-x: scroll;
+		padding: 16px;
+	}
+}
